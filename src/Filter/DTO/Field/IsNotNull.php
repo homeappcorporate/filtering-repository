@@ -9,6 +9,9 @@ class IsNotNull extends FilterField
         return false;
     }
 
+    /**
+     * @return null
+     */
     public function getValue()
     {
         return null;

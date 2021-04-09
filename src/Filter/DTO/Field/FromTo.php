@@ -4,9 +4,20 @@ namespace Homeapp\Filter\DTO\Field;
 
 class FromTo extends FilterField
 {
+    /**
+     * @var mixed
+     */
     private $from;
+    /**
+     * @var mixed
+     */
     private $to;
 
+    /**
+     * @param string $name
+     * @param mixed  $from
+     * @param mixed $to
+     */
     public function __construct(string $name, $from, $to)
     {
         parent::__construct($name);
@@ -40,6 +51,11 @@ class FromTo extends FilterField
         return $this->from === null && $this->to === null;
     }
 
+    /**
+     * @return array
+     *
+     * @psalm-return array{0: mixed, 1: mixed}
+     */
     public function getValue()
     {
         return [$this->from, $this->to];

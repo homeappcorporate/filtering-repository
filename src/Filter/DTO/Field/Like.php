@@ -5,14 +5,17 @@ namespace Homeapp\Filter\DTO\Field;
 
 class Like extends FilterField
 {
-    private $value;
+    private string $value;
 
-    public function __construct(string $name, $value)
+    public function __construct(string $name, string $value)
     {
         parent::__construct($name);
         $this->value = $value;
     }
 
+    /**
+     * @return string
+     */
     public function getValue()
     {
         return $this->value;
@@ -20,6 +23,6 @@ class Like extends FilterField
 
     public function isEmpty(): bool
     {
-        return (null === $this->value) || ('' === $this->value);
+        return '' === $this->value;
     }
 }

@@ -44,8 +44,8 @@ class FilterFactory
             $array['limits']['page'] = (int)($content['limits']['page'] ?? $content['page'] ?? 1);
             $array['limits']['count'] = (int)($content['limits']['count'] ?? $content['count'] ?? $defaultCount);
         }
-        $array['sorting'] = $content['sorting'] ?? [];
-        $array['viewType'] = $content['viewType'] ?? null;
+        $array['sorting'] = is_array($content['sorting']) ? $content['sorting'] : [];
+        $array['viewType'] = is_string($content['viewType']) ? $content['viewType'] : null;
 
         return $array;
     }
@@ -59,35 +59,43 @@ class FilterFactory
             $filter = new Filter([]);
         }
 
+        /** @var mixed $fieldData */
         foreach ($array['filter'] as $fieldName => $fieldData) {
-            if ($fieldName === 'age') {
+            if (!is_string($fieldName)) {
+                continue;
+            }
+            if ($fieldName === 'age' && is_scalar($fieldData)) {
                 $filter = $filter->withField(new FromTo('updatedAt', new DateTime('-'.$fieldData), null));
-            } elseif (false !== strpos($fieldName, self::COORDINATES_FIELD)) {
-                $filter = $filter->withField(Rectangle::fromSquareArray($fieldName, $fieldData));
-            } elseif ($fieldName === self::POLYGON_FIELD) {
-                $filter = $filter->withField(new Polygon($fieldName, $fieldData));
             } elseif (is_array($fieldData)) {
                 if (isset($fieldData['from']) || isset($fieldData['to'])) {
                     $filter = $filter->withField(FromTo::fromArray($fieldName, $fieldData));
                 } elseif (isset($fieldData[Point::LAT], $fieldData[Point::LNG])) {
-                    $filter = $filter->withField(new Point($fieldName, $fieldData[Point::LAT], $fieldData[Point::LNG]));
+                    $filter = $filter->withField(new Point($fieldName, (float)$fieldData[Point::LAT], (float)$fieldData[Point::LNG]));
+                } elseif ($fieldName === self::POLYGON_FIELD) {
+                    $filter = $filter->withField(new Polygon($fieldName, $fieldData));
+                } elseif ($fieldName === self::COORDINATES_FIELD) {
+                    $filter = $filter->withField(Rectangle::fromSquareArray($fieldName, $fieldData));
                 } else {
                     $filter = $filter->withField(new In($fieldName, $fieldData));
                 }
-            } elseif (0 === strpos($fieldData, '%')) {
-                $filter = $filter->withField(new Like($fieldName, $fieldData));
-            } elseif (0 === strpos($fieldData, 'notnull')) {
-                $filter = $filter->withField(new IsNotNull($fieldName));
-            } elseif (0 === strpos($fieldData, 'null')) {
-                $filter = $filter->withField(new IsNull($fieldName));
+            } elseif (is_string($fieldData)) {
+                if (0 === strpos($fieldData, '%')) {
+                    $filter = $filter->withField(new Like($fieldName, $fieldData));
+                } elseif (0 === strpos($fieldData, 'notnull')) {
+                    $filter = $filter->withField(new IsNotNull($fieldName));
+                } elseif (0 === strpos($fieldData, 'null')) {
+                    $filter = $filter->withField(new IsNull($fieldName));
+                }
             } else {
                 $filter = $filter->withField(new Equal($fieldName, $fieldData));
             }
         }
         if (!empty($array['limits']['count']) && self::COUNT_ALL !== $array['limits']['count']) {
-            $filter->setLimits($array['limits']['page'], $array['limits']['count']);
+            $filter->setLimits((int)$array['limits']['page'], (int)$array['limits']['count']);
         }
-        $filter->setViewType($array['viewType'] ?? null);
+        if (isset($array['viewType'])) {
+            $filter->setViewType((string)$array['viewType']);
+        }
 
         if (!empty($array['sorting'])) {
             if (
@@ -97,8 +105,7 @@ class FilterFactory
                 throw new FilterFactoryQueryParseException('Undefined `type` parameter in query');
             }
 
-            $sorting = new Sorting($array['sorting']['type'], $array['sorting']['direction'] ?? 'asc');
-            $sorting->setBase($array['sorting']['base'] ?? null);
+            $sorting = new Sorting((string)$array['sorting']['type'], (string)($array['sorting']['direction'] ?? 'asc'));
             $filter->setSorting($sorting);
         }
 

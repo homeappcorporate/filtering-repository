@@ -4,12 +4,19 @@ namespace Homeapp\Filter\DTO\Field;
 
 class Polygon extends FilterField
 {
-    private ?array $geoJson;
+    private array $geoJson = [];
 
     public function __construct(string $name, array $geoJson)
     {
         parent::__construct($name);
-        $this->geoJson = $geoJson['features'][0]['geometry'] ?? null;
+        if (!isset($geoJson['features'][0]['geometry'])) {
+            return;
+        }
+        $value = $geoJson['features'][0]['geometry'];
+        if (!is_array($value)) {
+            return;
+        }
+        $this->geoJson = $value;
     }
 
     public function isEmpty(): bool

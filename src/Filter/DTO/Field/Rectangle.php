@@ -22,7 +22,7 @@ class Rectangle extends FilterField
         $this->bottom = max($top, $bottom);
     }
 
-    public static function fromSquareArray(string $name, array $sqr)
+    public static function fromSquareArray(string $name, array $sqr): self
     {
         if (empty($sqr[self::TOP_LEFT][Point::LNG])) {
             throw new \InvalidArgumentException('No top-left lng found!');

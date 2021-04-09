@@ -4,10 +4,7 @@ namespace Homeapp\Filter\DTO\Field;
 
 class In extends FilterField
 {
-    /**
-     * @var array
-     */
-    private $values;
+    private array $values;
 
     public function __construct(string $name, array $values)
     {
@@ -15,6 +12,9 @@ class In extends FilterField
         $this->values = $values;
     }
 
+    /**
+     * @return array
+     */
     public function getValue()
     {
         return $this->getValues();

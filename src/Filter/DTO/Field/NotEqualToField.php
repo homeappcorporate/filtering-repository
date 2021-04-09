@@ -5,9 +5,9 @@ namespace Homeapp\Filter\DTO\Field;
 
 class NotEqualToField extends FilterField
 {
-    private $value;
+    private string $value;
 
-    public function __construct(string $name, $value)
+    public function __construct(string $name, string $value)
     {
         parent::__construct($name);
         $this->value = $value;
@@ -18,11 +18,11 @@ class NotEqualToField extends FilterField
      */
     public function getValue()
     {
-        return (string)$this->value;
+        return $this->value;
     }
 
     public function isEmpty(): bool
     {
-        return (null === $this->value) || ('' === $this->value);
+        return '' === $this->value;
     }
 }

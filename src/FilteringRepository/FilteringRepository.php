@@ -20,28 +20,35 @@ class FilteringRepository extends ServiceEntityRepository
      */
     protected FilteringService $filter;
 
-    public function __construct(ManagerRegistry $registry, $entityClass, FilteringService $filter)
+    /**
+     * @psalm-suppress ArgumentTypeCoercion
+     */
+    public function __construct(ManagerRegistry $registry, string $entityClass, FilteringService $filter)
     {
         parent::__construct($registry, $entityClass);
         $this->filter = $filter;
     }
 
-    public function filter(Filter $filter, $qb = null): array
+    public function filter(Filter $filter, QueryBuilder $qb = null): array
     {
-        /** @var QueryBuilder */
         $qb = $qb ?? $this->createQueryBuilder('a');
 
         $this->filter->prepareFilter($filter, $qb);
 
-        if (!empty($filter->getCount()) && !empty($filter->getPage())) {
-            $start = ($filter->getPage() - 1) * $filter->getCount();
-            $qb->setFirstResult($start)->setMaxResults($filter->getCount());
+        $count = $filter->getCount();
+        if (null !== $count && !empty($filter->getPage())) {
+            $start = ($filter->getPage() - 1) * $count;
+            $qb->setFirstResult($start)->setMaxResults($count);
         }
 
-        return $qb->getQuery()->getResult();
+        $result = $qb->getQuery()->getResult();
+        if (!is_array($result)){
+            throw new \RuntimeException('Wrong result type');
+        }
+        return $result;
     }
 
-    public function filteredCount(?Filter $filter, $qb = null): int
+    public function filteredCount(?Filter $filter, QueryBuilder $qb = null): int
     {
         $qb = $qb ?? $this->createQueryBuilder('a');
 

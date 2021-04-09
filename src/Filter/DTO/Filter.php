@@ -12,26 +12,21 @@ class Filter
     /**
      * @var array|FilterField[]
      */
-    private $fields = [];
+    private array $fields = [];
 
-    private $page;
+    private ?int $page  = null;
+    private ?int $count = null;
 
-    private $count;
-
-    /** @var string|null */
-    private $viewType;
-
-    /**
-     * @var Sorting|null
-     */
-    private $sorting;
-
-    /** @var string|null */
-    private $groupBy;
+    private ?string  $viewType = null;
+    private ?Sorting $sorting  = null;
+    private ?string  $groupBy  = null;
 
     public function __construct(array $fields)
     {
         foreach ($fields as $field) {
+            if (!$field instanceof FieldInterface) {
+                continue;
+            }
             $this->addField($field);
         }
     }
@@ -73,12 +68,12 @@ class Filter
         return $this->page ?? 1;
     }
 
-    public function getCount()
+    public function getCount(): ?int
     {
         return $this->count;
     }
 
-    public function withoutField($name): Filter
+    public function withoutField(string $name): Filter
     {
         $o = clone $this;
         if (isset($o->fields[$name])) {
@@ -98,29 +93,12 @@ class Filter
         return !$this->hasField($field);
     }
 
-    /**
-     * @param FieldInterface $filterField
-     *
-     * @deprecated используйте иммутабельный метод withField()
-     */
-    public function addField(FieldInterface $filterField): void
+    private function addField(FieldInterface $filterField): void
     {
         if ($filterField->isEmpty()) {
             return;
         }
         $this->fields[$filterField->getName()] = $filterField;
-    }
-
-    /**
-     * @param string $fieldName
-     *
-     * @deprecated используйте иммутабельный метод withoutField()
-     */
-    public function removeField(string $fieldName): void
-    {
-        if (array_key_exists($fieldName, $this->fields)) {
-            unset($this->fields[$fieldName]);
-        }
     }
 
     public function withField(FieldInterface $filterField): self
@@ -132,16 +110,20 @@ class Filter
     }
 
     /**
-     * @return  array|FilterField[]
+     * @return FilterField[]
      */
     public function getFields(): array
     {
-        return $this->fields;
+        return array_filter($this->fields, fn($el) => $el instanceof FilterField);
     }
 
     public function getField(string $name): ?FieldInterface
     {
-        return $this->fields[$name] ?? null;
+        if (!isset($this->fields[$name])) {
+            return null;
+        }
+
+        return $this->fields[$name] instanceof FieldInterface ? $this->fields[$name] : null;
     }
 
     public function getSorting(): ?Sorting

@@ -10,5 +10,8 @@ interface FieldInterface
 
     public function withName(string $name): self;
 
+    /**
+     * @return mixed
+     */
     public function getValue();
 }
