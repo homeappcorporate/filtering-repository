@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Homeapp\FilteringRepository\Handlers;
 
+use Doctrine\ORM\QueryBuilder;
 use Homeapp\Filter\DTO\Field\Equal;
 use Homeapp\Filter\DTO\Field\FilterField;
-use Doctrine\ORM\QueryBuilder;
 
 class EqualHandler implements FilteringHandlerInterface
 {
@@ -25,14 +25,14 @@ class EqualHandler implements FilteringHandlerInterface
         if ($field instanceof Equal) {
             $qb->andWhere(
                 sprintf(
-                    FilteringHandlerInterface::DEFAULT_ALIAS . '.%s = :%sEq',
+                    FilteringHandlerInterface::DEFAULT_ALIAS.'.%s = :%sEq',
                     $field->getName(),
-                    FilteringHandlerInterface::DEFAULT_ALIAS . $field->getName()
+                    FilteringHandlerInterface::DEFAULT_ALIAS.$field->getName()
                 )
             )->setParameter(
                 sprintf(
                     '%sEq',
-                    FilteringHandlerInterface::DEFAULT_ALIAS . $field->getName()
+                    FilteringHandlerInterface::DEFAULT_ALIAS.$field->getName()
                 ),
                 $field->getValue()
             );

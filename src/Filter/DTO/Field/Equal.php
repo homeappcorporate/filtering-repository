@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Homeapp\Filter\DTO\Field;
 
 class Equal extends FilterField
@@ -11,7 +13,7 @@ class Equal extends FilterField
 
     /**
      * @param string $name
-     * @param mixed $value
+     * @param mixed  $value
      */
     public function __construct(string $name, $value)
     {

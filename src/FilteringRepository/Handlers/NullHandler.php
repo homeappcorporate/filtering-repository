@@ -2,10 +2,10 @@
 
 namespace Homeapp\FilteringRepository\Handlers;
 
+use Doctrine\ORM\QueryBuilder;
 use Homeapp\Filter\DTO\Field\FilterField;
 use Homeapp\Filter\DTO\Field\IsNotNull;
 use Homeapp\Filter\DTO\Field\IsNull;
-use Doctrine\ORM\QueryBuilder;
 
 class NullHandler implements FilteringHandlerInterface
 {
@@ -22,12 +22,14 @@ class NullHandler implements FilteringHandlerInterface
     public function addFilter(FilterField $field, QueryBuilder $qb): void
     {
         if ($field instanceof IsNull) {
-            $qb->andWhere(sprintf(FilteringHandlerInterface::DEFAULT_ALIAS . '.%s IS NULL', $field->getName()));
+            $qb->andWhere(sprintf(FilteringHandlerInterface::DEFAULT_ALIAS.'.%s IS NULL', $field->getName()));
+
             return;
         }
 
         if ($field instanceof IsNotNull) {
-            $qb->andWhere(sprintf(FilteringHandlerInterface::DEFAULT_ALIAS . '.%s IS NOT NULL', $field->getName()));
+            $qb->andWhere(sprintf(FilteringHandlerInterface::DEFAULT_ALIAS.'.%s IS NOT NULL', $field->getName()));
+
             return;
         }
     }

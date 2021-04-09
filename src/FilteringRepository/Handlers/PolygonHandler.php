@@ -2,9 +2,11 @@
 
 namespace Homeapp\FilteringRepository\Handlers;
 
+use Doctrine\ORM\QueryBuilder;
 use Homeapp\Filter\DTO\Field\FilterField;
 use Homeapp\Filter\DTO\Field\Polygon;
-use Doctrine\ORM\QueryBuilder;
+
+use function json_encode;
 
 class PolygonHandler implements FilteringHandlerInterface
 {
@@ -23,10 +25,10 @@ class PolygonHandler implements FilteringHandlerInterface
         if ($field instanceof Polygon) {
             $qb->andWhere(
                 sprintf(
-                    'ST_Contains( ST_GeomFromGeoJSON(:%sPoly), ST_Point(' . FilteringHandlerInterface::DEFAULT_ALIAS . '.lng, ' . FilteringHandlerInterface::DEFAULT_ALIAS . ".lat)) = 't'",
+                    'ST_Contains( ST_GeomFromGeoJSON(:%sPoly), ST_Point('.FilteringHandlerInterface::DEFAULT_ALIAS.'.lng, '.FilteringHandlerInterface::DEFAULT_ALIAS.".lat)) = 't'",
                     $field->getName()
                 )
-            )->setParameter(sprintf('%sPoly', $field->getName()), \json_encode($field->getGeoJson()));
+            )->setParameter(sprintf('%sPoly', $field->getName()), json_encode($field->getGeoJson()));
         }
     }
 }

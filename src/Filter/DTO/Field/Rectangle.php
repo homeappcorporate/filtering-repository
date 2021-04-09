@@ -1,6 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Homeapp\Filter\DTO\Field;
+
+use InvalidArgumentException;
 
 class Rectangle extends FilterField
 {
@@ -25,17 +29,18 @@ class Rectangle extends FilterField
     public static function fromSquareArray(string $name, array $sqr): self
     {
         if (empty($sqr[self::TOP_LEFT][Point::LNG])) {
-            throw new \InvalidArgumentException('No top-left lng found!');
+            throw new InvalidArgumentException('No top-left lng found!');
         }
         if (empty($sqr[self::TOP_LEFT][Point::LAT])) {
-            throw new \InvalidArgumentException('No top-left lat found!');
+            throw new InvalidArgumentException('No top-left lat found!');
         }
         if (empty($sqr[self::BOTTOM_RIGHT][Point::LAT])) {
-            throw new \InvalidArgumentException('No bottom-right lat found!');
+            throw new InvalidArgumentException('No bottom-right lat found!');
         }
         if (empty($sqr[self::BOTTOM_RIGHT][Point::LNG])) {
-            throw new \InvalidArgumentException('No bottom-right lng found!');
+            throw new InvalidArgumentException('No bottom-right lng found!');
         }
+
         return new self(
             $name,
             (float)$sqr[self::TOP_LEFT][Point::LNG],

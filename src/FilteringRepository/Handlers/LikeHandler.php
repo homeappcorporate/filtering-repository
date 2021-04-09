@@ -3,10 +3,9 @@
 namespace Homeapp\FilteringRepository\Handlers;
 
 
+use Doctrine\ORM\QueryBuilder;
 use Homeapp\Filter\DTO\Field\FilterField;
 use Homeapp\Filter\DTO\Field\Like;
-use Doctrine\ORM\Query;
-use Doctrine\ORM\QueryBuilder;
 
 class LikeHandler implements FilteringHandlerInterface
 {
@@ -26,8 +25,8 @@ class LikeHandler implements FilteringHandlerInterface
             $value = trim($field->getValue(), '%');
             $value = str_replace('%', '\\%', $value);
             $value = '%'.$value.'%';
-            $qb->andWhere(sprintf(FilteringHandlerInterface::DEFAULT_ALIAS . '.%s LIKE :%sEq', $field->getName(), FilteringHandlerInterface::DEFAULT_ALIAS . $field->getName()))
-               ->setParameter(sprintf('%sEq', FilteringHandlerInterface::DEFAULT_ALIAS . $field->getName()), $value);
+            $qb->andWhere(sprintf(FilteringHandlerInterface::DEFAULT_ALIAS.'.%s LIKE :%sEq', $field->getName(), FilteringHandlerInterface::DEFAULT_ALIAS.$field->getName()))
+               ->setParameter(sprintf('%sEq', FilteringHandlerInterface::DEFAULT_ALIAS.$field->getName()), $value);
         }
     }
 }

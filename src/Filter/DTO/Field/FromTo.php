@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Homeapp\Filter\DTO\Field;
 
 class FromTo extends FilterField
@@ -16,7 +18,7 @@ class FromTo extends FilterField
     /**
      * @param string $name
      * @param mixed  $from
-     * @param mixed $to
+     * @param mixed  $to
      */
     public function __construct(string $name, $from, $to)
     {

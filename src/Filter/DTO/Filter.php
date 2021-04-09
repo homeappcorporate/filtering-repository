@@ -93,14 +93,6 @@ class Filter
         return !$this->hasField($field);
     }
 
-    private function addField(FieldInterface $filterField): void
-    {
-        if ($filterField->isEmpty()) {
-            return;
-        }
-        $this->fields[$filterField->getName()] = $filterField;
-    }
-
     public function withField(FieldInterface $filterField): self
     {
         $obj = clone $this;
@@ -139,5 +131,13 @@ class Filter
     public function isEmpty(): bool
     {
         return empty($this->fields);
+    }
+
+    private function addField(FieldInterface $filterField): void
+    {
+        if ($filterField->isEmpty()) {
+            return;
+        }
+        $this->fields[$filterField->getName()] = $filterField;
     }
 }
