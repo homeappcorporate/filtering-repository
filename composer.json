@@ -1,0 +1,23 @@
+{
+    "name": "homeapp/filtering-repository",
+    "type": "library",
+    "license": "MIT",
+    "description": "Filter and pagination mapper between http-request и Doctrine ORM",
+    "autoload": {
+        "psr-4": {
+            "Homeapp\\Filter\\": "src/Filter/",
+            "Homeapp\\FilteringRepository\\": "src/FilteringRepository/"
+        }
+    },
+    "require-dev": {
+        "codeception/codeception": "^4.1",
+        "vimeo/psalm": "^4.7",
+        "codeception/stub": "^3.7"
+    },
+    "require": {
+        "php": "^7.4",
+        "symfony/http-foundation": "^5.2",
+        "doctrine/orm": "^2.8",
+        "doctrine/doctrine-bundle": "^2.3"
+    }
+}
