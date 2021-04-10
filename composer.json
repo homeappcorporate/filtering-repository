@@ -10,10 +10,10 @@
         }
     },
     "require-dev": {
-        "codeception/codeception": "^4.1",
         "vimeo/psalm": "^4.7",
         "codeception/stub": "^3.7",
-        "roave/backward-compatibility-check": "^5.0"
+        "roave/backward-compatibility-check": "^5.0",
+        "phpunit/phpunit": "^9.5"
     },
     "require": {
         "php": "^7.4",
