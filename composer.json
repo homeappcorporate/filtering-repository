@@ -9,16 +9,16 @@
             "Homeapp\\FilteringRepository\\": "src/FilteringRepository/"
         }
     },
-    "require-dev": {
-        "vimeo/psalm": "^4.7",
-        "codeception/stub": "^3.7",
-        "roave/backward-compatibility-check": "^5.0",
-        "phpunit/phpunit": "^9.5"
-    },
     "require": {
         "php": "^7.4",
         "symfony/http-foundation": "^5.2",
         "doctrine/orm": "^2.8",
         "doctrine/doctrine-bundle": "^2.3"
+    },
+    "require-dev": {
+        "vimeo/psalm": "^4.7",
+        "codeception/stub": "^3.7",
+        "roave/backward-compatibility-check": "^5.0",
+        "phpunit/phpunit": "^9.5"
     }
 }
