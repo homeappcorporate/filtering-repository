@@ -9,6 +9,12 @@
             "Homeapp\\FilteringRepository\\": "src/FilteringRepository/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Test\\Filter\\": "tests/Filter/",
+            "Test\\FilteringRepository\\": "test/FilteringRepository/"
+        }
+    },
     "require": {
         "php": "^7.4",
         "symfony/http-foundation": "^5.2",
