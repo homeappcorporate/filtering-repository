@@ -19,17 +19,18 @@ class FilteringRepository extends ServiceEntityRepository
 {
     private array $allowedFields = [];
     private array $sortingFields = [];
-    
+
     /** @var FilteringHandlerInterface[] */
-    private array $handlers;
+    private array $handlers = [];
 
     /**
      * @psalm-suppress ArgumentTypeCoercion
+     * @param FilteringHandlerInterface[] $handlers
      */
-    public function __construct(ManagerRegistry $registry, string $entityClass, FilteringHandlerInterface ...$handlers)
+    public function __construct(ManagerRegistry $registry, string $entityClass, array $handlers)
     {
         parent::__construct($registry, $entityClass);
-        $this->handlers = $handlers;
+        $this->setHandlers($handlers);
     }
 
     public function setAllowedFields(array $allowedFields): void
@@ -52,6 +53,20 @@ class FilteringRepository extends ServiceEntityRepository
     public function addAllowedField(string $name): void
     {
         $this->allowedFields[] = $name;
+    }
+
+    /**
+     * @param FilteringHandlerInterface[] $handlers
+     */
+    public function setHandlers(array $handlers): void
+    {
+        $handlers = array_filter($handlers, fn($el) => $el instanceof FilteringHandlerInterface);
+        $this->handlers = $handlers;
+    }
+
+    public function addHandler(FilteringHandlerInterface $handler): void
+    {
+        $this->handlers[] = $handler;
     }
 
     public function filter(Filter $filter, QueryBuilder $qb = null): array
