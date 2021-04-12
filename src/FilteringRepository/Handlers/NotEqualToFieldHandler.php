@@ -3,9 +3,9 @@
 namespace Homeapp\FilteringRepository\Handlers;
 
 
+use Doctrine\ORM\QueryBuilder;
 use Homeapp\Filter\DTO\Field\FilterField;
 use Homeapp\Filter\DTO\Field\NotEqualToField;
-use Doctrine\ORM\QueryBuilder;
 
 class NotEqualToFieldHandler implements FilteringHandlerInterface
 {

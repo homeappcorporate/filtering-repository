@@ -2,9 +2,9 @@
 
 namespace Homeapp\FilteringRepository\Handlers;
 
-use Homeapp\Filter\DTO\Field\GreaterThan;
-use Homeapp\Filter\DTO\Field\FilterField;
 use Doctrine\ORM\QueryBuilder;
+use Homeapp\Filter\DTO\Field\FilterField;
+use Homeapp\Filter\DTO\Field\GreaterThan;
 
 class GreaterThanHandler implements FilteringHandlerInterface
 {
@@ -21,8 +21,8 @@ class GreaterThanHandler implements FilteringHandlerInterface
     public function addFilter(FilterField $field, QueryBuilder $qb): void
     {
         if ($field instanceof GreaterThan) {
-            $qb->andWhere(sprintf(FilteringHandlerInterface::DEFAULT_ALIAS . '.%s > :%sGt', $field->getName(), FilteringHandlerInterface::DEFAULT_ALIAS . $field->getName()))
-               ->setParameter(sprintf('%sGt', FilteringHandlerInterface::DEFAULT_ALIAS . $field->getName()), $field->getValue());
+            $qb->andWhere(sprintf(FilteringHandlerInterface::DEFAULT_ALIAS.'.%s > :%sGt', $field->getName(), FilteringHandlerInterface::DEFAULT_ALIAS.$field->getName()))
+               ->setParameter(sprintf('%sGt', FilteringHandlerInterface::DEFAULT_ALIAS.$field->getName()), $field->getValue());
         }
     }
 }
