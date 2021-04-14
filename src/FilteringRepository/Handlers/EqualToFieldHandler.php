@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Homeapp\FilteringRepository\Handlers;
 
@@ -20,7 +22,7 @@ class EqualToFieldHandler implements FilteringHandlerInterface
 
     public function addFilter(FilterField $field, QueryBuilder $qb): void
     {
-        if ($field instanceof EqualToField) {
+        if ($this->isSupported($field)) {
             $qb->andWhere(sprintf('%s.%s = %s', FilteringHandlerInterface::DEFAULT_ALIAS, $field->getName(), $field->getValue()));
         }
     }

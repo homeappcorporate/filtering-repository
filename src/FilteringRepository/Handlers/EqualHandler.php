@@ -22,17 +22,17 @@ class EqualHandler implements FilteringHandlerInterface
 
     public function addFilter(FilterField $field, QueryBuilder $qb): void
     {
-        if ($field instanceof Equal) {
+        if ($this->isSupported($field)) {
             $qb->andWhere(
                 sprintf(
-                    FilteringHandlerInterface::DEFAULT_ALIAS.'.%s = :%sEq',
+                    FilteringHandlerInterface::DEFAULT_ALIAS . '.%s = :%sEq',
                     $field->getName(),
-                    FilteringHandlerInterface::DEFAULT_ALIAS.$field->getName()
+                    FilteringHandlerInterface::DEFAULT_ALIAS . $field->getName()
                 )
             )->setParameter(
                 sprintf(
                     '%sEq',
-                    FilteringHandlerInterface::DEFAULT_ALIAS.$field->getName()
+                    FilteringHandlerInterface::DEFAULT_ALIAS . $field->getName()
                 ),
                 $field->getValue()
             );
