@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Homeapp\FilteringRepository\Handlers;
 
@@ -22,15 +24,11 @@ class NullHandler implements FilteringHandlerInterface
     public function addFilter(FilterField $field, QueryBuilder $qb): void
     {
         if ($field instanceof IsNull) {
-            $qb->andWhere(sprintf(FilteringHandlerInterface::DEFAULT_ALIAS.'.%s IS NULL', $field->getName()));
-
-            return;
+            $qb->andWhere(sprintf(FilteringHandlerInterface::DEFAULT_ALIAS . '.%s IS NULL', $field->getName()));
         }
 
         if ($field instanceof IsNotNull) {
-            $qb->andWhere(sprintf(FilteringHandlerInterface::DEFAULT_ALIAS.'.%s IS NOT NULL', $field->getName()));
-
-            return;
+            $qb->andWhere(sprintf(FilteringHandlerInterface::DEFAULT_ALIAS . '.%s IS NOT NULL', $field->getName()));
         }
     }
 }
