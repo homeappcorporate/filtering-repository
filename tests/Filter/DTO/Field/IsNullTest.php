@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 
 class IsNullTest extends TestCase
 {
-    public function testGetName()
+    public function testGetName(): void
     {
         $fieldName = 'test';
         $isNull = new IsNull($fieldName);
@@ -17,14 +17,14 @@ class IsNullTest extends TestCase
         self::assertEquals($fieldName, $isNull->getName());
     }
 
-    public function testIsEmpty()
+    public function testIsEmpty(): void
     {
         $isNull = new IsNull('test');
 
         self::assertFalse($isNull->isEmpty());
     }
 
-    public function testGetValue()
+    public function testGetValue(): void
     {
         $isNull = new IsNull('test');
 

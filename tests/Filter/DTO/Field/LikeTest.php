@@ -12,7 +12,7 @@ class LikeTest extends TestCase
     /**
      * @dataProvider values
      */
-    public function testIsEmpty($value, bool $isEmpty)
+    public function testIsEmpty($value, bool $isEmpty): void
     {
         $greaterThan = new Like('field', $value);
 
@@ -22,14 +22,14 @@ class LikeTest extends TestCase
     /**
      * @dataProvider values
      */
-    public function testGetValue($value)
+    public function testGetValue($value): void
     {
         $greaterThan = new Like('field', $value);
 
         self::assertEquals($value, $greaterThan->getValue());
     }
 
-    public function testGetName()
+    public function testGetName(): void
     {
         $fieldName = 'field';
         $greaterThan = new Like('field', 'test');

@@ -12,7 +12,7 @@ use SebastianBergmann\RecursionContext\InvalidArgumentException;
 class PolygonTest extends TestCase
 {
 
-    public function testGetName()
+    public function testGetName(): void
     {
         $fieldName = 'test';
 
@@ -23,7 +23,7 @@ class PolygonTest extends TestCase
     /**
      * @dataProvider values
      */
-    public function testIsEmpty(string $name, array $values, bool $isEmpty)
+    public function testIsEmpty(string $name, array $values, bool $isEmpty): void
     {
         $polygon = new Polygon($name, $values);
 
@@ -33,7 +33,7 @@ class PolygonTest extends TestCase
     /**
      * @dataProvider values
      */
-    public function testGetValue(string $name, array $values, bool $isEmpty, $returnValue)
+    public function testGetValue(string $name, array $values, bool $isEmpty, $returnValue): void
     {
         $polygon = new Polygon($name, $values);
 
@@ -43,7 +43,7 @@ class PolygonTest extends TestCase
     /**
      * @dataProvider values
      */
-    public function testGetPolygon(string $name, array $values, bool $isEmpty, $returnValue)
+    public function testGetPolygon(string $name, array $values, bool $isEmpty, $returnValue): void
     {
         $polygon = new Polygon($name, $values);
 

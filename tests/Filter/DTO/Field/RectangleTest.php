@@ -11,7 +11,7 @@ use PHPUnit\Framework\TestCase;
 
 class RectangleTest extends TestCase
 {
-    public function testGetName()
+    public function testGetName(): void
     {
         $fieldName = 'test';
         $rectangle = new Rectangle($fieldName, 0.0, 0.0, 0.0, 0.0);
@@ -22,7 +22,7 @@ class RectangleTest extends TestCase
     /**
      * @dataProvider exceptionValues 
      */
-    public function testFromSquareArrayException(string $name, array $values, string $exceptionMessage)
+    public function testFromSquareArrayException(string $name, array $values, string $exceptionMessage): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage($exceptionMessage);
@@ -30,7 +30,7 @@ class RectangleTest extends TestCase
         Rectangle::fromSquareArray($name, $values);
     }
 
-    public function testFromSquareArray()
+    public function testFromSquareArray(): void
     {
         $values = [
             Rectangle::TOP_LEFT => [Point::LNG => 0.1, Point::LAT => 0.1],

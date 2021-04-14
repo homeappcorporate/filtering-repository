@@ -27,7 +27,7 @@ class FromToTest extends TestCase
         self::assertEquals(array_values($values), $fromTo->getValue());
     }
 
-    public function testGetName()
+    public function testGetName(): void
     {
         $fromTo = new FromTo('test', 'from', 'to');
 
@@ -37,14 +37,14 @@ class FromToTest extends TestCase
     /**
      * @dataProvider parseValues
      */
-    public function testGetFrom(string $fieldName, array $values)
+    public function testGetFrom(string $fieldName, array $values): void
     {
         $fromTo = new FromTo($fieldName, $values['from'], $values['to']);
 
         self::assertEquals($values['from'], $fromTo->getFrom());
     }
 
-    public function testIsEmpty()
+    public function testIsEmpty(): void
     {
         $fromTo = new FromTo('test', null, null);
 
@@ -54,7 +54,7 @@ class FromToTest extends TestCase
     /**
      * @dataProvider parseValues
      */
-    public function testGetTo(string $fieldName, array $values)
+    public function testGetTo(string $fieldName, array $values): void
     {
         $fromTo = new FromTo($fieldName, $values['from'], $values['to']);
 

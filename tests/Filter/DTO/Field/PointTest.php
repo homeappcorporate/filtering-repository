@@ -11,7 +11,7 @@ use SebastianBergmann\RecursionContext\InvalidArgumentException;
 
 class PointTest extends TestCase
 {
-    public function testGetName()
+    public function testGetName(): void
     {
         $fieldName = 'fieldName';
         $point = new Point($fieldName, 0.0, 0.0);
@@ -19,7 +19,7 @@ class PointTest extends TestCase
         self::assertEquals($fieldName, $point->getName());
     }
 
-    public function testIsEmpty()
+    public function testIsEmpty(): void
     {
         $point = new Point('fieldName', 0.0, 0.0);
 
@@ -29,7 +29,7 @@ class PointTest extends TestCase
     /**
      * @dataProvider values
      */
-    public function testGetValue(string $name, float $lat, float $lng)
+    public function testGetValue(string $name, float $lat, float $lng): void
     {
         $point = new Point($name, $lat, $lng);
 
@@ -39,7 +39,7 @@ class PointTest extends TestCase
     /**
      * @dataProvider values
      */
-    public function testGetLng(string $name, float $lat, float $lng)
+    public function testGetLng(string $name, float $lat, float $lng): void
     {
         $point = new Point($name, $lat, $lng);
 
@@ -49,7 +49,7 @@ class PointTest extends TestCase
     /**
      * @dataProvider values
      */
-    public function testGetLat(string $name, float $lat, float $lng)
+    public function testGetLat(string $name, float $lat, float $lng): void
     {
         $point = new Point($name, $lat, $lng);
 
