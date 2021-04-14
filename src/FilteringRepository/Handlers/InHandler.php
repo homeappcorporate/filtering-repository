@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Homeapp\FilteringRepository\Handlers;
 
@@ -20,9 +22,9 @@ class InHandler implements FilteringHandlerInterface
 
     public function addFilter(FilterField $field, QueryBuilder $qb): void
     {
-        if ($field instanceof In) {
-            $qb->andWhere(sprintf('%s.%s IN (:%sIn)', FilteringHandlerInterface::DEFAULT_ALIAS, $field->getName(), FilteringHandlerInterface::DEFAULT_ALIAS.$field->getName()))
-               ->setParameter(sprintf('%sIn', FilteringHandlerInterface::DEFAULT_ALIAS.$field->getName()), $field->getValues());
+        if ($this->isSupported($field)) {
+            $qb->andWhere(sprintf('%s.%s IN (:%sIn)', FilteringHandlerInterface::DEFAULT_ALIAS, $field->getName(), FilteringHandlerInterface::DEFAULT_ALIAS . $field->getName()))
+                ->setParameter(sprintf('%sIn', FilteringHandlerInterface::DEFAULT_ALIAS . $field->getName()), $field->getValues());
         }
     }
 }
