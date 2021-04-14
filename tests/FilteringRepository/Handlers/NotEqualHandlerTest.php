@@ -37,7 +37,7 @@ class NotEqualHandlerTest extends TestCase
         self::assertFalse($notEqualHandler->isSupported($field));
     }
 
-    public function testFields(): void
+    public function testAddFields(): void
     {
         $notEqualHandler = new NotEqualHandler();
 
@@ -75,4 +75,3 @@ class NotEqualHandlerTest extends TestCase
         $notEqualHandler->addFilter($notEqual, $qb);
     }
 }
-
