@@ -16,15 +16,6 @@ use ReflectionClass;
 
 class FilterTest extends TestCase
 {
-    public function test(): void
-    {
-        $filter = new Filter();
-        $reflection = new ReflectionClass($filter);
-        $reflection->getProperty('allowedFields')->setAccessible(true);
-        $reflection->getProperty('virtualFields')->setAccessible(true);
-        $reflection->getProperty('sortingFields')->setAccessible(true);
-    }
-
     public function testNoSort(): void
     {
         $filter = new Filter();
