@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Homeapp\FilteringRepository\Handlers;
 
-use Homeapp\Filter\DTO\Field\LessThan;
-use Homeapp\Filter\DTO\Field\FilterField;
 use Doctrine\ORM\QueryBuilder;
+use Homeapp\Filter\DTO\Field\FilterField;
+use Homeapp\Filter\DTO\Field\LessThan;
 
 class LessThanHandler implements FilteringHandlerInterface
 {
