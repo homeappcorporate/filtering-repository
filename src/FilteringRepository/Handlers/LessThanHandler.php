@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Homeapp\FilteringRepository\Handlers;
 
@@ -20,9 +22,9 @@ class LessThanHandler implements FilteringHandlerInterface
 
     public function addFilter(FilterField $field, QueryBuilder $qb): void
     {
-        if ($field instanceof LessThan) {
-            $qb->andWhere(sprintf(FilteringHandlerInterface::DEFAULT_ALIAS.'.%s < :%sLt', $field->getName(), FilteringHandlerInterface::DEFAULT_ALIAS.$field->getName()))
-               ->setParameter(sprintf('%sLt', FilteringHandlerInterface::DEFAULT_ALIAS.$field->getName()), $field->getValue());
+        if ($this->isSupported($field)) {
+            $qb->andWhere(sprintf(FilteringHandlerInterface::DEFAULT_ALIAS . '.%s < :%sLt', $field->getName(), FilteringHandlerInterface::DEFAULT_ALIAS . $field->getName()))
+                ->setParameter(sprintf('%sLt', FilteringHandlerInterface::DEFAULT_ALIAS . $field->getName()), $field->getValue());
         }
     }
 }

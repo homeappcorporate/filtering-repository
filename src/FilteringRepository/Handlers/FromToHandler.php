@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Homeapp\FilteringRepository\Handlers;
 
@@ -20,14 +22,14 @@ class FromToHandler implements FilteringHandlerInterface
 
     public function addFilter(FilterField $field, QueryBuilder $qb): void
     {
-        if ($field instanceof FromTo) {
+        if ($this->isSupported($field)) {
             if (null !== $field->getFrom()) {
-                $qb->andWhere(sprintf(FilteringHandlerInterface::DEFAULT_ALIAS.'.%s >= :%sFrom', $field->getName(), FilteringHandlerInterface::DEFAULT_ALIAS.$field->getName()))
-                   ->setParameter(sprintf('%sFrom', FilteringHandlerInterface::DEFAULT_ALIAS.$field->getName()), $field->getFrom());
+                $qb->andWhere(sprintf(FilteringHandlerInterface::DEFAULT_ALIAS . '.%s >= :%sFrom', $field->getName(), FilteringHandlerInterface::DEFAULT_ALIAS . $field->getName()))
+                    ->setParameter(sprintf('%sFrom', FilteringHandlerInterface::DEFAULT_ALIAS . $field->getName()), $field->getFrom());
             }
             if (null !== $field->getTo()) {
-                $qb->andWhere(sprintf(FilteringHandlerInterface::DEFAULT_ALIAS.'.%s <= :%sTo', $field->getName(), FilteringHandlerInterface::DEFAULT_ALIAS.$field->getName()))
-                   ->setParameter(sprintf('%sTo', FilteringHandlerInterface::DEFAULT_ALIAS.$field->getName()), $field->getTo());
+                $qb->andWhere(sprintf(FilteringHandlerInterface::DEFAULT_ALIAS . '.%s <= :%sTo', $field->getName(), FilteringHandlerInterface::DEFAULT_ALIAS . $field->getName()))
+                    ->setParameter(sprintf('%sTo', FilteringHandlerInterface::DEFAULT_ALIAS . $field->getName()), $field->getTo());
             }
         }
     }

@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Homeapp\FilteringRepository\Handlers;
 
@@ -21,12 +23,12 @@ class LikeHandler implements FilteringHandlerInterface
 
     public function addFilter(FilterField $field, QueryBuilder $qb): void
     {
-        if ($field instanceof Like) {
+        if ($this->isSupported($field)) {
             $value = trim($field->getValue(), '%');
             $value = str_replace('%', '\\%', $value);
-            $value = '%'.$value.'%';
-            $qb->andWhere(sprintf(FilteringHandlerInterface::DEFAULT_ALIAS.'.%s LIKE :%sEq', $field->getName(), FilteringHandlerInterface::DEFAULT_ALIAS.$field->getName()))
-               ->setParameter(sprintf('%sEq', FilteringHandlerInterface::DEFAULT_ALIAS.$field->getName()), $value);
+            $value = '%' . $value . '%';
+            $qb->andWhere(sprintf(FilteringHandlerInterface::DEFAULT_ALIAS . '.%s LIKE :%sEq', $field->getName(), FilteringHandlerInterface::DEFAULT_ALIAS . $field->getName()))
+                ->setParameter(sprintf('%sEq', FilteringHandlerInterface::DEFAULT_ALIAS . $field->getName()), $value);
         }
     }
 }

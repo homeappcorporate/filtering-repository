@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Homeapp\FilteringRepository\Handlers;
 
@@ -21,8 +23,8 @@ class GreaterThanHandler implements FilteringHandlerInterface
     public function addFilter(FilterField $field, QueryBuilder $qb): void
     {
         if ($field instanceof GreaterThan) {
-            $qb->andWhere(sprintf(FilteringHandlerInterface::DEFAULT_ALIAS.'.%s > :%sGt', $field->getName(), FilteringHandlerInterface::DEFAULT_ALIAS.$field->getName()))
-               ->setParameter(sprintf('%sGt', FilteringHandlerInterface::DEFAULT_ALIAS.$field->getName()), $field->getValue());
+            $qb->andWhere(sprintf(FilteringHandlerInterface::DEFAULT_ALIAS . '.%s > :%sGt', $field->getName(), FilteringHandlerInterface::DEFAULT_ALIAS . $field->getName()))
+                ->setParameter(sprintf('%sGt', FilteringHandlerInterface::DEFAULT_ALIAS . $field->getName()), $field->getValue());
         }
     }
 }
