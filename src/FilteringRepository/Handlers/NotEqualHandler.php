@@ -3,9 +3,9 @@
 namespace Homeapp\FilteringRepository\Handlers;
 
 
+use Doctrine\ORM\QueryBuilder;
 use Homeapp\Filter\DTO\Field\FilterField;
 use Homeapp\Filter\DTO\Field\NotEqual;
-use Doctrine\ORM\QueryBuilder;
 
 class NotEqualHandler implements FilteringHandlerInterface
 {
@@ -22,8 +22,8 @@ class NotEqualHandler implements FilteringHandlerInterface
     public function addFilter(FilterField $field, QueryBuilder $qb): void
     {
         if ($field instanceof NotEqual) {
-            $qb->andWhere(sprintf(FilteringHandlerInterface::DEFAULT_ALIAS . '.%s <> :%sNeq', $field->getName(), FilteringHandlerInterface::DEFAULT_ALIAS . $field->getName()))
-               ->setParameter(sprintf('%sNeq', FilteringHandlerInterface::DEFAULT_ALIAS . $field->getName()), $field->getValue());
+            $qb->andWhere(sprintf(FilteringHandlerInterface::DEFAULT_ALIAS.'.%s <> :%sNeq', $field->getName(), FilteringHandlerInterface::DEFAULT_ALIAS.$field->getName()))
+               ->setParameter(sprintf('%sNeq', FilteringHandlerInterface::DEFAULT_ALIAS.$field->getName()), $field->getValue());
         }
     }
 }

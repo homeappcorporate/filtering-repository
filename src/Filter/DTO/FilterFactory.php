@@ -44,8 +44,8 @@ class FilterFactory
             $array['limits']['page'] = (int)($content['limits']['page'] ?? $content['page'] ?? 1);
             $array['limits']['count'] = (int)($content['limits']['count'] ?? $content['count'] ?? $defaultCount);
         }
-        $array['sorting'] = is_array($content['sorting']) ? $content['sorting'] : [];
-        $array['viewType'] = is_string($content['viewType']) ? $content['viewType'] : null;
+        $array['sorting'] = (!empty($content['sorting']) && is_array($content['sorting'])) ? $content['sorting'] : [];
+        $array['viewType'] = (!empty($content['viewType']) && is_string($content['viewType'])) ? $content['viewType'] : null;
 
         return $array;
     }
